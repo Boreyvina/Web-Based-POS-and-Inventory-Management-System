@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-canvas text-ink font-sans antialiased;
+  }
+  /* Figures line up in columns — essential when scanning prices and totals. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+    @apply font-mono;
+  }
+  /* Keyboard users must always be able to see where they are. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-white;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Printing: only the receipt goes on paper. */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .receipt, .receipt * {
+    visibility: visible;
+  }
+  .receipt {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    padding: 0;
+    box-shadow: none;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Print only the receipt, sized for an 80mm thermal roll. */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #receipt,
+  #receipt * {
+    visibility: visible;
+  }
+  #receipt {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 76mm;
+    padding: 0;
+    box-shadow: none;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
